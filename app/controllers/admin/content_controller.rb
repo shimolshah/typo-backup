@@ -142,9 +142,12 @@ class Admin::ContentController < Admin::BaseController
   def new_or_edit
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
+    
+    edit = true if @article != nil
+    
     @article = Article.get_or_build_article(id)
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
-# debugger
+debugger
     @post_types = PostType.find(:all)
     if request.post?
       if params[:article][:draft]
@@ -180,7 +183,11 @@ class Admin::ContentController < Admin::BaseController
     @images = Resource.images_by_created_at.page(params[:page]).per(10)
     @resources = Resource.without_images_by_filename
     @macros = TextFilter.macro_filters
-    render 'new'
+    if edit
+      render "new"
+    else
+      render "edit"
+    end
   end
 
   def set_the_flash
