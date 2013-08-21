@@ -13,7 +13,6 @@ Feature: Merge Articles
     Given I am on the all articles page
     When I follow "Test"
     And I fill in "merge_with" with "5"
-    Then I should see name="merge_with"
     When I press "Merge"
     Then I should see "Test..."
     And I should see "Welcome to Typo. This is your first article. Edit or delete it, then start blogging!"
